@@ -55,7 +55,7 @@ function setup () {
     time.startTimer('loadAll');
     for (let i = 0; i < modules.length; i++) {
         try {
-            require(modules[i].load).init(bot, modules[i].prefs);
+            require(modules[i].path).init(bot, modules[i].prefs);
         } catch (e) {
             console.log(`Failed to load module "${modules[i].load}". [MODULE_ERR]`);
             console.log(e);

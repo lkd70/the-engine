@@ -2,7 +2,7 @@
     "auth_token": "YOUR_API_TOKEN",
     "db": {},
     "modules": [
-        { "load": "./bot_modules/sayhi" },
-        { "load": "./bot_modules/getid" }
+        { "path": "./bot_modules/sayhi" },
+        { "path": "./bot_modules/getid" }
     ]
 }
