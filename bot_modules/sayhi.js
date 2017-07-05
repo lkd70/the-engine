@@ -2,7 +2,7 @@
 
 exports.init = (bot, prefs) => {
 
-    bot.functions.sayhi = {
+    bot.register.command('sayhi', {
 
         fn: message => {
 
@@ -16,6 +16,6 @@ exports.init = (bot, prefs) => {
 
         }
 
-    };
+    });
 
 };

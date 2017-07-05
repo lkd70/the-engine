@@ -2,7 +2,7 @@
 
 exports.init = (bot, prefs) => {
 
-    bot.functions.myid = {
+    bot.register.command('myid', {
 
         fn: message => {
 
@@ -10,9 +10,9 @@ exports.init = (bot, prefs) => {
 
         }
 
-    };
+    });
 
-    bot.functions.chatid = {
+    bot.register.command('chatid', {
 
         fn: message => {
 
@@ -20,6 +20,6 @@ exports.init = (bot, prefs) => {
 
         }
 
-    };
+    });
 
 };

@@ -6,6 +6,7 @@ const
     telebot = require('telebot'),
     time    = require('./time'),
     Ioredis = require('Ioredis'),
+    path    = require('path'),
 
     control = {
         config: process.argv[2] || './config.json',
@@ -16,6 +17,7 @@ const
     };
 
 let bot = { }, authTimer, spanningTimer = time.startTimer('ready');
+const moduleName = Symbol('moduleName');
 
 bot.db = new Ioredis(control.config.db)
 
@@ -48,12 +50,27 @@ try {
 function setup () {
 
     bot.functions = { };
-    Object.freeze(bot);
+
+    bot.register = {}
+    bot.register.command = (commands, fn) => {
+        if (typeof commands === 'string') {
+            commands = [commands];
+        }
+        const path_ = modules[i].path;
+
+        const name = path.basename(path_, path.extname(path_));
+        fn[moduleName] = name;
+
+        for (const command of commands) {
+            bot.functions[command.toLowerCase()] = fn
+        }
+    };
+    Object.seal(bot);
     bot.api.on('text', receive);
 
     let modules = control.config.modules, failed  = 0;
     time.startTimer('loadAll');
-    for (let i = 0; i < modules.length; i++) {
+    for (var i = 0; i < modules.length; i++) {
         try {
             require(modules[i].path).init(bot, modules[i].prefs);
         } catch (e) {
@@ -63,6 +80,8 @@ function setup () {
         }
     }
     console.log(`Done loading modules: ${modules.length - failed} OK, ${failed} failed. (${time.resolveTimer('loadAll')} ms)`);
+
+    bot.register = null; // time for registering is now over
 
     let spanningTimer = time.resolveTimer('ready');
     console.log(`Ready to process messages. (${(spanningTimer - authTimer).toFixed(2)} ms | ${spanningTimer} ms)`);
