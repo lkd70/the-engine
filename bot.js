@@ -5,7 +5,7 @@ const
     fs      = require('fs'),
     telebot = require('telebot'),
     time    = require('./time'),
-    Ioredis = require('Ioredis'),
+    Ioredis = require('ioredis'),
     path    = require('path'),
     modules = require('./bot_modules/modules'),
 

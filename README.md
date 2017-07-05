@@ -14,8 +14,8 @@ Download the project from our git & install dependancies:
 ```sh
 $ git clone https://github.com/lkd70/nodeMattata.git
 $ cd nodeMattata
-$ npm install -d
-$ node app
+$ npm install
+$ node bot
 ```
 
 ### Configuration
@@ -36,7 +36,7 @@ Example `config.json`:
 }
 ``` 
 
-| Element | Example Data | Description \
+| Element | Example Data | Description |
 | ----- | ----- | ----- |
 | auth_token | 123456789:a1B2c3D4e5F6g7H8i9JkLmNoPqRsTuVwXyZ | Your bots token as provided by @BotFather |
 | db | {} | |
@@ -76,7 +76,7 @@ nodeMattata consists of several skilled developers (and Matt), all working toget
 | Name | Telegram | Role |
 | ------ | ------ | ------ |
 | GingerPlusPlus | [@GingerPlusPlus](https://t.me/GingerPlusPlus) | Developer & innovator |
-| Kuvam | [@snarkie](https://t.me/snarkie) | Dev & innovator |
+| Kuvam | [@snarkie](https://t.me/snarkie) | Developer & innovator |
 | LKD70 | [@LKD70](https://t.me/LKD70) | Documentor & innovator |
 | Matt | [@wrxck0](https://t.me/wrxck0) | Leech |
 | nyuszika7h | [@nyuszika7h](https://t.me/nyuszika7h) | innovator |
