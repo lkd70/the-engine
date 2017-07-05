@@ -1,5 +1,7 @@
 'use strict';
 
+const util = require('util');
+
 exports.init = (bot, prefs) => {
 
     bot.register.command('myid', {
@@ -20,6 +22,15 @@ exports.init = (bot, prefs) => {
 
         }
 
+    });
+
+    bot.register.command('jsondump', {
+        fn: msg => {
+            bot.api.sendMessage(msg.chat.id, '```'+util.inspect(msg, false, null)+'```', {
+                parseMode:"markdown",
+                reply: msg.message_id
+            });
+        }
     });
 
 };

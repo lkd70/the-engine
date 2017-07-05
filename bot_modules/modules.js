@@ -88,5 +88,24 @@ exports.init = (bot_, prefs) => {
             })
     })
 
+    bot.register.command('commands', {
+
+        fn: message => {
+            var reply = "";
+            for (var key in bot.functions) {
+                if (bot.functions.hasOwnProperty(key)) {
+                    reply += "`/"+key+"`";
+                    if ("help" in bot.functions[key]) reply += " - " + bot.functions[key].help;
+                    reply += "\n";
+
+                }
+            }
+            bot.api.sendMessage(message.chat.id, reply, {
+                reply: message.message_id,
+                parseMode: "markdown"
+            });
+        }
+    });
+
     Object.freeze(exports)
 }
