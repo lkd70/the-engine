@@ -1,0 +1,8 @@
+{
+    "auth_token": "YOUR_API_TOKEN",
+    "db": {},
+    "modules": [
+        { "load": "./bot_modules/sayhi" },
+        { "load": "./bot_modules/getid" }
+    ]
+}
