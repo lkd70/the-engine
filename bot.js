@@ -7,6 +7,7 @@ const
     time    = require('./time'),
     Ioredis = require('Ioredis'),
     path    = require('path'),
+    modules = require('./bot_modules/modules'),
 
     control = {
         config: process.argv[2] || './config.json',
@@ -88,7 +89,7 @@ function setup () {
 
 }
 
-function receive (message) {
+async function receive (message) {
 
     if (bot.time.isExpired(message.date))
         return;
@@ -133,6 +134,8 @@ function receive (message) {
         message.tag(`Failed. #E_${code} ⚠️\n${desc}.`);
 
     const funct = bot.functions[commandEntity];
+    if (message._handled || await modules.isDisabled(message.chat.id, funct[moduleName])) {
+        return;
+    }
     message.tag(funct.fn(message), funct.format);
-
 }

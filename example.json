@@ -2,6 +2,7 @@
     "auth_token": "YOUR_API_TOKEN",
     "db": {},
     "modules": [
+        { "path": "./bot_modules/modules", "essential": true },
         { "path": "./bot_modules/sayhi" },
         { "path": "./bot_modules/getid" }
     ]
