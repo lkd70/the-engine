@@ -19,14 +19,14 @@ const
 let bot = { }, authTimer, spanningTimer = time.startTimer('ready');
 const moduleName = Symbol('moduleName');
 
-bot.db = new Ioredis(control.config.db)
-
 try {
 
     process.on('SIGINT', () => control.shutdown("SIGINT"));
     console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.config}".`);
     control.config = JSON.parse(fs.readFileSync(control.config, 'utf-8'));
     Object.freeze(control.config);
+
+    bot.db = new Ioredis(control.config.db);
 
     bot.api = new telebot(control.config.auth_token);
     bot.api.start();
