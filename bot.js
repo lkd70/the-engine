@@ -7,7 +7,6 @@ const
     time    = require('./time'),
     Ioredis = require('ioredis'),
     path    = require('path'),
-    modules = require('./bot_modules/modules'),
 
     control = {
         config: process.argv[2] || './config.json',
@@ -20,7 +19,7 @@ const
     };
 
 let bot = { }, authTimer, spanningTimer = time.startTimer('ready');
-const moduleName = Symbol('moduleName');
+const pluginName = Symbol('pluginName');
 
 try {
 
@@ -61,10 +60,10 @@ function setup () {
         if (typeof commands === 'string') {
             commands = [commands];
         }
-        const path_ = modules[i].path;
+        const path_ = plugins[i].path;
 
         const name = path.basename(path_, path.extname(path_));
-        fn[moduleName] = name;
+        fn[pluginName] = name;
 
         for (const command of commands) {
             bot.functions[command.toLowerCase()] = fn
@@ -73,18 +72,18 @@ function setup () {
     Object.seal(bot);
     bot.api.on('text', receive);
 
-    let modules = control.config.modules, failed  = 0;
+    let plugins = control.config.plugins, failed  = 0;
     time.startTimer('loadAll');
-    for (var i = 0; i < modules.length; i++) {
+    for (var i = 0; i < plugins.length; i++) {
         try {
-            require(modules[i].path).init(bot, modules[i].prefs);
+            require(plugins[i].path).init(bot, plugins[i].prefs);
         } catch (e) {
-            console.log(`Failed to load module "${modules[i].load}". [MODULE_ERR]`);
+            console.log(`Failed to load plugin "${plugins[i].load}". [plugin_ERR]`);
             console.log(e);
             failed++;
         }
     }
-    console.log(`Done loading modules: ${modules.length - failed} OK, ${failed} failed. (${time.resolveTimer('loadAll')} ms)`);
+    console.log(`Done loading plugins: ${plugins.length - failed} OK, ${failed} failed. (${time.resolveTimer('loadAll')} ms)`);
 
     bot.register = null; // time for registering is now over
 
@@ -92,6 +91,8 @@ function setup () {
     console.log(`Ready to process messages. (${(spanningTimer - authTimer).toFixed(2)} ms | ${spanningTimer} ms)`);
 
 }
+
+const isPluginDisabled = (chatid, name) => bot.db.sismember(`chat${chatid}:disabledPlugins`, name.toLowerCase())
 
 async function receive (message) {
 
@@ -138,7 +139,7 @@ async function receive (message) {
         message.tag(`Failed. #E_${code} ⚠️\n${desc}.`);
 
     const funct = bot.functions[commandEntity];
-    if (message._handled || await modules.isDisabled(message.chat.id, funct[moduleName])) {
+    if (message._handled || await isPluginDisabled(message.chat.id, funct[pluginName])) {
         return;
     }
     message.tag(funct.fn(message), funct.format);

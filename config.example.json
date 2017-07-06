@@ -1,12 +1,12 @@
 {
     "auth_token": "374331012:AAHhiBuYyyC2u6WMj3zxD6EVN0OVUzUgGYY",
     "db": {},
-    "modules": [
-        { "path": "./bot_modules/modules", "essential": true },
-        { "path": "./bot_modules/sayhi" },
-        { "path": "./bot_modules/getid" },
-        { "path": "./bot_modules/ping"  },
-        { "path": "./bot_modules/help"  },
-        { "path": "./bot_modules/strings"  }
+    "plugins": [
+        { "path": "./plugins/plugins", "essential": true },
+        { "path": "./plugins/sayhi" },
+        { "path": "./plugins/getid" },
+        { "path": "./plugins/ping"  },
+        { "path": "./plugins/help"  },
+        { "path": "./plugins/strings"  }
     ]
 }
