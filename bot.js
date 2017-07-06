@@ -78,7 +78,7 @@ function setup () {
         try {
             require(plugins[i].path).init(bot, plugins[i].prefs);
         } catch (e) {
-            console.log(`Failed to load plugin "${plugins[i].load}". [plugin_ERR]`);
+            console.log(`Failed to load plugin "${plugins[i].path}".`);
             console.log(e);
             failed++;
         }

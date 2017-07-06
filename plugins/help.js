@@ -7,7 +7,7 @@ exports.init = (bot, prefs) => {
         help: "You are here!",
         fn: msg => {
             var message = msg.text.replace('/help','');
-            
+
             if (message != "") {
                 if (message.substring(1) in bot.functions) {
                     if ("help" in bot.functions[message.substring(1)]) {

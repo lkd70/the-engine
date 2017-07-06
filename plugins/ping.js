@@ -4,11 +4,7 @@ exports.init = (bot, prefs) => {
 
     bot.register.command('ping', {
 
-        fn: message => {
-
-            return 'PONG!';
-
-        }
+        fn: () => 'PONG!'
 
     });
 
