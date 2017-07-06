@@ -13,7 +13,9 @@ const
         config: process.argv[2] || './config.json',
         shutdown: (reason = "Unknown reason", fail) => {
             console.log(`Terminated: ${reason}. [SHUTDOWN_CLEAN]`);
-            process.exit(!Boolean(fail));
+            process.exitCode = !fail;
+            bot.api.stop(reason);
+            bot.db.quit();
         }
     };
 
@@ -23,6 +25,8 @@ const moduleName = Symbol('moduleName');
 try {
 
     process.on('SIGINT', () => control.shutdown("SIGINT"));
+    process.on('SIGTERM', () => control.shutdown("SIGTERM"));
+    process.on('SIGBREAK', () => control.shutdown("Ctrl + Break"));
     console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.config}".`);
     control.config = JSON.parse(fs.readFileSync(control.config, 'utf-8'));
     Object.freeze(control.config);
