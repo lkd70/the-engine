@@ -104,6 +104,7 @@ async function receive (message) {
     if (firstEntity.offset || firstEntity.type != 'bot_command')
         return;
     let commandEntity = message.text.substr(1, firstEntity.length - 1).toLowerCase();
+    message.args = message.text.slice(message.entities[0].length + 1)
     const botMention = commandEntity.match(/@.*/);
     if (botMention) {
         if (botMention[0].substr(1) != bot.profile.username)
