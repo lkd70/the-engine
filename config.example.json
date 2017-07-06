@@ -7,6 +7,8 @@
         { "path": "./plugins/getid" },
         { "path": "./plugins/ping"  },
         { "path": "./plugins/help"  },
+        { "path": "./plugins/unformat" },
+        { "path": "./plugins/emojify"  },
         { "path": "./plugins/strings"  }
     ]
 }

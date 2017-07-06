@@ -8,5 +8,8 @@
     "telebot": "^1.2.0"
   },
   "author": "Kuvam",
-  "license": "CC-BY-NC-ND-4.0"
+  "license": "CC-BY-NC-ND-4.0",
+  "optionalDependencies": {
+    "emoji-regex": "^6.4.3"
+  }
 }
