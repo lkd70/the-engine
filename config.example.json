@@ -8,7 +8,7 @@
         { "path": "./plugins/ping"  },
         { "path": "./plugins/help"  },
         { "path": "./plugins/unformat" },
-        { "path": "./plugins/emojify"  },
+        { "path": "./plugins/demojify" },
         { "path": "./plugins/strings"  }
     ]
 }

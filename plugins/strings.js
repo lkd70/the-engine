@@ -1,5 +1,6 @@
 'use strict'
 
+const {emojify } = require('node-emoji')
 const {unformat} = require('./unformat')
 
 exports.init = (bot, prefs) => {
@@ -18,6 +19,8 @@ exports.init = (bot, prefs) => {
             // we run unformat with the command intact, to not mess up entity offsets,
             // only after that we get rid of command
             let response = unformat(message).slice(cut);
+
+            response = emojify(response);
 
             bot.api.sendMessage(message.chat.id, response, {
                 parseMode: 'markdown',
