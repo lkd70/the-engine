@@ -7,6 +7,7 @@ const
     time    = require('./time'),
     Ioredis = require('ioredis'),
     path    = require('path'),
+    symbols = require('./core-symbols'),
 
     control = {
         configFilePath: process.argv[2] || './config.json',
@@ -19,7 +20,7 @@ const
     };
 
 let bot = { }, authTimer, spanningTimer = time.startTimer('ready');
-const pluginName = Symbol('pluginName');
+const {pluginName} = symbols;
 
 control.config = require(control.configFilePath);
 
