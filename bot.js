@@ -82,6 +82,7 @@ function setup () {
         } catch (e) {
             console.log(`Failed to load plugin "${plugins[i].path}".`);
             console.log(e);
+            plugins[i][symbols.error] = e;
             failed++;
         }
     }

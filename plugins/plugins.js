@@ -4,6 +4,7 @@
 
 const path = require('path')
 const emoji = require('node-emoji')
+const coreSymbols = require('../core-symbols')
 
 let pluginList
 let pluginSet
@@ -41,13 +42,26 @@ exports.enable = async (chatid, names) => {
 
 exports.isDisabled = (chatid, name) => bot.db.sismember(`chat${chatid}:disabledPlugins`, name.toLowerCase())
 
+exports.pathToName = (path_) => path.basename(path_, path.extname(path_))
 
 exports.init = (bot_, prefs) => {
     bot = bot_
 
+    // because some plugins might not have been initialized yet
+    setImmediate(() => {
+        const failedList = bot.control.config.plugins
+            .filter(plugin => plugin[coreSymbols.error])
+            .map(plugin => exports.pathToName(plugin.path))
+
+        exports.failed = new Set(failedList)
+
+        Object.freeze(exports)
+    })
+
+
     pluginList = exports.list = bot.control.config.plugins
         .filter(plugin => !plugin.essential)
-        .map(plugin => path.basename(plugin.path, path.extname(plugin.path)))
+        .map(plugin => exports.pathToName(plugin.path))
         .filter(name => name != 'plugins')
         .sort()
 
@@ -60,7 +74,14 @@ exports.init = (bot_, prefs) => {
             bot.db.pipeline(
                 pluginList.map(name => ['sismember', `chat${msg.chat.id}:disabledPlugins`, name])
             ).exec()
-            .map(([, disabled], i) => (disabled? emoji.get('x'): emoji.get('white_check_mark')) + pluginList[i])
+            .map(([, disabled], i) => (
+                disabled
+                    ? emoji.get('x')
+                : exports.failed.has(pluginList[i])
+                    ? emoji.get('warning')
+                    : emoji.get('white_check_mark')
+                ) + ' ' + pluginList[i]
+            )
             .then(array => msg.reply.text(array.join('\n')))
         }
     })
@@ -110,6 +131,4 @@ exports.init = (bot_, prefs) => {
             });
         }
     });
-
-    Object.freeze(exports)
 }
