@@ -9,7 +9,7 @@ const
     path    = require('path'),
 
     control = {
-        config: process.argv[2] || './config.json',
+        configFilePath: process.argv[2] || './config.json',
         shutdown: (reason = "Unknown reason", fail) => {
             console.log(`Terminated: ${reason}. [SHUTDOWN_CLEAN]`);
             process.exitCode = !fail;
@@ -21,13 +21,14 @@ const
 let bot = { }, authTimer, spanningTimer = time.startTimer('ready');
 const pluginName = Symbol('pluginName');
 
+control.config = require(control.configFilePath);
+
 try {
 
     process.on('SIGINT', () => control.shutdown("SIGINT"));
     process.on('SIGTERM', () => control.shutdown("SIGTERM"));
     process.on('SIGBREAK', () => control.shutdown("Ctrl + Break"));
     console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.config}".`);
-    control.config = JSON.parse(fs.readFileSync(control.config, 'utf-8'));
     Object.freeze(control.config);
 
     bot.db = new Ioredis(control.config.db);
