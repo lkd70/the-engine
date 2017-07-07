@@ -57,15 +57,30 @@ function setup () {
 
     bot.functions = { };
 
-    bot.register = {}
+    const getPluginName = () => {
+        const path_ = plugins[i].path;
+
+        const name = path.basename(path_, path.extname(path_));
+
+        return name.toLowerCase();
+    }
+
+    bot.register = (sth, fn) => {
+        const name = getPluginName();
+        bot.api.on(sth, async msg => {
+            if (msg._handled || await isPluginDisabled(msg.chat.id, name)) {
+                return;
+            }
+            return fn.call(this, msg);
+        });
+    }
+
     bot.register.command = (commands, fn) => {
         if (typeof commands === 'string') {
             commands = [commands];
         }
-        const path_ = plugins[i].path;
 
-        const name = path.basename(path_, path.extname(path_));
-        fn[pluginName] = name;
+        fn[pluginName] = getPluginName();
 
         for (const command of commands) {
             if (bot.functions.hasOwnProperty(command.toLowerCase())) {
