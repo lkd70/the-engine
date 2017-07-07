@@ -5,11 +5,10 @@
   "dependencies": {
     "ioredis": "^3.1.1",
     "node-emoji": "^1.5.1",
-    "telebot": "^1.2.0"
+    "telebot": "^1.2.0",
+    "xregexp": "^3.2.0"
   },
   "author": "Kuvam",
   "license": "CC-BY-NC-ND-4.0",
-  "optionalDependencies": {
-    "emoji-regex": "^6.4.3"
-  }
+  "optionalDependencies": {}
 }

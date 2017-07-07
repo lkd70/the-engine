@@ -1,9 +1,16 @@
 'use strict'
 
 const emoji = require('node-emoji')
-const emojiRegex = require('emoji-regex')()
+const XRegExp = require('xregexp')
 
-const demojify = exports.demojify = text => text.replace(emojiRegex, char => `:${emoji.which(char)}:`)
+const demojify = exports.demojify = s => {
+    Object.entries(emoji.emoji).forEach(([k, v]) => {
+      let regex = XRegExp(XRegExp.escape(v), 'g')
+      s = XRegExp.replace(s, regex, `:${k}:`)
+    })
+
+    return s
+}
 
 exports.init = (bot, prefs) => {
     bot.register.command('demojify', {
