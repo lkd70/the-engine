@@ -26,9 +26,9 @@ control.config = require(control.configFilePath);
 
 try {
 
-    process.on('SIGINT', () => control.shutdown("SIGINT"));
-    process.on('SIGTERM', () => control.shutdown("SIGTERM"));
-    process.on('SIGBREAK', () => control.shutdown("Ctrl + Break"));
+    process.once('SIGINT', () => control.shutdown("SIGINT"));
+    process.once('SIGTERM', () => control.shutdown("SIGTERM"));
+    process.once('SIGBREAK', () => control.shutdown("Ctrl + Break"));
     console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.config}".`);
     Object.freeze(control.config);
 
@@ -68,6 +68,9 @@ function setup () {
         fn[pluginName] = name;
 
         for (const command of commands) {
+            if (bot.functions.hasOwnProperty(command.toLowerCase())) {
+                throw new Error(`Attempt to register ${command} command, already registered by ${bot.functions[command.toLowerCase()][pluginName]} plugin`);
+            }
             bot.functions[command.toLowerCase()] = fn
         }
     };
