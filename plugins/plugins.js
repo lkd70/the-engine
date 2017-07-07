@@ -35,7 +35,7 @@ exports.enable = async (chatid, names) => {
             throw new Error(`Unknown plugin: ${name}`)
         }
     }
-    return bot.db.srem(`chat${chatid}:disabledPlugins`, name)
+    return bot.db.srem(`chat${chatid}:disabledPlugins`, names)
 }
 
 
@@ -68,8 +68,10 @@ exports.init = (bot_, prefs) => {
 
     bot.register.command('disable', {
         fn: requiresPermission('can_change_info', msg => {
-            const plugins = msg.text.split(/\s+/g).slice(1)
-            if (plugins.length === 0) return 'Give me name of a plugin to disable.'
+            if (!msg.args) {
+                return 'Give me name of a plugin to disable.'
+            }
+            const plugins = msg.args.split(/\s+/g)
             exports.disable(msg.chat.id, plugins)
                 .then((number) => `${number} plugins disabled.`)
                 .catch(e => e.message)
@@ -79,8 +81,10 @@ exports.init = (bot_, prefs) => {
 
     bot.register.command('enable', {
         fn: requiresPermission('can_change_info', msg => {
-            const plugins = msg.text.split(/\s+/g).slice(1)
-            if (plugins.length === 0) return 'Give me name of a plugin to enable.'
+            if (!msg.args) {
+                return 'Give me name of a plugin to enable.'
+            }
+            const plugins = msg.args.split(/\s+/g)
             exports.enable(msg.chat.id, plugins)
                 .then((number) => `${number} plugins enabled.`)
                 .catch(e => e.message)
