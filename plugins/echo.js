@@ -1,7 +1,28 @@
 'use strict'
 
-const {emojify } = require('node-emoji')
+const emoji      = require('node-emoji')
 const {unformat} = require('./unformat')
+
+const searchEmoji = exports.searchEmoji = (s) => {
+    s = s.toLowerCase();
+    for (const key in emoji.emoji) {
+        if (key.includes(s)) {
+            return emoji.emoji[key];
+        }
+    }
+}
+
+const emojify = exports.emojify = text =>
+    text.replace(/:([\w-]+):|\\:|`.+`|```[\s\S]```/g, (match, emojiname) => {
+        if (match === '\\:') {
+            return ':';
+        } else if (emojiname) {
+            emojiname = emojiname.toLowerCase();
+            return emoji.emoji[emojiname] || emoji.emoji[`flag-${emojiname}`] || searchEmoji(emojiname) || match;
+        } else {
+            return match;
+        }
+    })
 
 exports.init = (bot, prefs) => {
 
