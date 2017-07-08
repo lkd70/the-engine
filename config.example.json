@@ -4,9 +4,11 @@
     "plugins": [
         { "path": "./plugins/plugins", "essential": true },
         { "path": "./plugins/sayhi" },
-        { "path": "./plugins/getid" },
         { "path": "./plugins/ping"  },
         { "path": "./plugins/help"  },
+        { "path": "./plugins/quote" },
+        { "path": "./plugins/id"    },
+        { "path": "./plugins/trigger"  },
         { "path": "./plugins/unformat" },
         { "path": "./plugins/demojify" },
         { "path": "./plugins/echo"     }
