@@ -79,4 +79,4 @@ nodeMattata consists of several skilled developers (and Matt), all working toget
 | Kuvam | [@snarkie](https://t.me/snarkie) | Developer & innovator |
 | LKD70 | [@LKD70](https://t.me/LKD70) | Documentor & innovator |
 | Matt | [@wrxck0](https://t.me/wrxck0) | Leech |
-| nyuszika7h | [@nyuszika7h](https://t.me/nyuszika7h) | innovator |
+| nyuszika7h | [@nyuszika7h](https://t.me/nyuszika7h) | Developer & innovator |
