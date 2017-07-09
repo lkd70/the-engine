@@ -29,7 +29,7 @@ try {
     process.once('SIGINT', () => control.shutdown("SIGINT"));
     process.once('SIGTERM', () => control.shutdown("SIGTERM"));
     process.once('SIGBREAK', () => control.shutdown("Ctrl + Break"));
-    console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.config}".`);
+    console.log(`\nRunning on node ${process.version} with process id ${process.pid}.\nLoading config from "${control.configFilePath}".`);
     Object.freeze(control.config);
 
     bot.db = new Ioredis(control.config.db);
@@ -67,11 +67,11 @@ function setup () {
 
     bot.register = (sth, fn) => {
         const name = getPluginName();
-        bot.api.on(sth, async msg => {
-            if (msg._handled || await isPluginDisabled(msg.chat.id, name)) {
+        bot.api.on(sth, async message => {
+            if (message[symbols.handled] || await isPluginDisabled(message.chat.id, name)) {
                 return;
             }
-            return fn.call(this, msg);
+            return fn.call(this, message);
         });
     }
 
@@ -161,7 +161,7 @@ async function receive (message) {
         message.tag(`Failed. #E_${code} ⚠️\n${desc}.`);
 
     const funct = bot.functions[commandEntity];
-    if (message._handled || await isPluginDisabled(message.chat.id, funct[pluginName])) {
+    if (message[symbols.handled] || await isPluginDisabled(message.chat.id, funct[pluginName])) {
         return;
     }
     message.tag(funct.fn(message), funct.format);

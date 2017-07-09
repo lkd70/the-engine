@@ -2,6 +2,7 @@
 
 const names = [
     'error',
+    'handled',
     'pluginName',
 ]
 
