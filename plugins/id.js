@@ -72,7 +72,12 @@ exports.getTarget = async (msg) => {
         if (/^-?\d+$/.test(msg.args)) {
             return {id: msg.args};
         } else {
-            return await exports.resolve(msg.args);
+            const target = await exports.resolve(msg.args);
+            if (target) {
+                return target;
+            } else {
+                throw new Error('Failed to resolve.');
+            }
         }
     } else if (msg.reply_to_message) {
         return msg.reply_to_message.from;
@@ -84,13 +89,20 @@ exports.init = (bot_, prefs) => {
     bot.api.on('text', exports.registerMsg)
     bot.register.command('id', {
         fn: async (msg) => {
-            let target = (await exports.getTarget(msg)) || msg.chat;
+            try {
+                var target = (await exports.getTarget(msg)) || msg.chat;
+            } catch (e) {
+                msg.reply.text(e.message);
+            }
             if (Object.keys(target).length === 1) {
                 try {
                     target = (await bot.api.getChat(target.id)).result;
-                } catch (e) {}
+                } catch (e) {
+                    msg.reply.text("I couldn't obtain any info about chat with this id.");
+                    return;
+                }
             }
-            console.log(target)
+            delete target.photo;
             msg.reply.text(util.format(target));
         }
     });
