@@ -128,7 +128,7 @@ async function receive (message) {
     message.args = message.text.slice(message.entities[0].length + 1)
     const botMention = commandEntity.match(/@.*/);
     if (botMention) {
-        if (botMention[0].substr(1) != bot.profile.username)
+        if (botMention[0].substr(1) !== bot.profile.username.toLowerCase())
             return;
         commandEntity = botMention.input.substr(0, botMention.index);
     }
