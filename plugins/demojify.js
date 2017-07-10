@@ -1,19 +1,16 @@
-'use strict'
+'use strict';
 
-const emoji = require('node-emoji')
-const XRegExp = require('xregexp')
+const XRegExp = require('xregexp');
 
-const demojify = exports.demojify = s => {
-    Object.entries(emoji.emoji).forEach(([k, v]) => {
-      let regex = XRegExp(XRegExp.escape(v), 'g')
-      s = XRegExp.replace(s, regex, `:${k}:`)
-    })
+const emoji = require('../emoji');
 
-    return s
-}
+const emojiReplacements = Array.from(emoji.emojiToShort.entries()).map(([emoji, shortname]) =>
+    [XRegExp(XRegExp.escape(emoji), 'g'), shortname]);
+
+const demojify = exports.demojify = text => XRegExp.replaceEach(text, emojiReplacements);
 
 exports.init = (bot, prefs) => {
     bot.register.command('demojify', {
         fn: msg => demojify(msg.args || msg.reply_to_message.text)
-    })
-}
+    });
+};

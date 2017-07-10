@@ -3,7 +3,7 @@
 /* plugin manager */
 
 const path = require('path')
-const emoji = require('node-emoji')
+const emoji = require('../emoji')
 const coreSymbols = require('../core-symbols')
 
 let pluginList

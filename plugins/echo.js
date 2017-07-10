@@ -1,16 +1,15 @@
-'use strict'
+'use strict';
 
-const emoji      = require('node-emoji')
-const {unformat} = require('./unformat')
+const emoji = require('../emoji');
+const { unformat } = require('./unformat');
 
-const searchEmoji = exports.searchEmoji = (s) => {
-    s = s.toLowerCase();
-    for (const key in emoji.emoji) {
-        if (key.includes(s)) {
-            return emoji.emoji[key];
+const searchEmoji = exports.searchEmoji = s => {
+    for (const [shortname, emoji_] of emoji.shortToEmoji) {
+        if (shortname.replace(/[_-]/g, '').includes(s.replace(/[_-]/g, ''))) {
+            return emoji_;
         }
     }
-}
+};
 
 const emojify = exports.emojify = text =>
     text.replace(/:([\w-]+):|\\:|`.+`|```[\s\S]```/g, (match, emojiname) => {
@@ -18,11 +17,11 @@ const emojify = exports.emojify = text =>
             return ':';
         } else if (emojiname) {
             emojiname = emojiname.toLowerCase();
-            return emoji.emoji[emojiname] || emoji.emoji[`flag-${emojiname}`] || searchEmoji(emojiname) || match;
+            return emoji.get(emojiname) || searchEmoji(emojiname) || match;
         } else {
             return match;
         }
-    })
+    });
 
 exports.init = (bot, prefs) => {
 
