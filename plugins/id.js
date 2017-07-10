@@ -80,12 +80,14 @@ exports.getTarget = async (msg) => {
             }
         }
     } else if (msg.reply_to_message) {
+        msg.reply_to_message.from.type = 'private';
         return msg.reply_to_message.from;
     }
 };
 
 exports.init = (bot_, prefs) => {
     bot = bot_
+    exports.registerUser(bot.profile);
     bot.api.on('text', exports.registerMsg)
     bot.register.command('id', {
         fn: async (msg) => {
@@ -101,6 +103,16 @@ exports.init = (bot_, prefs) => {
                     msg.reply.text("I couldn't obtain any info about chat with this id.");
                     return;
                 }
+            }
+            if (msg.chat.type === 'supergroup' && target.type === 'private' && !target.status) {
+                const member = (await bot.api.getChatMember(msg.chat.id, target.id)).result;
+                Object.assign(target, member.user);
+                delete member.user;
+                Object.assign(target, member);
+                if (target.until_date) {
+                    target.until_date = new Date(target.until_date * 1000);
+                }
+                delete target.type;
             }
             delete target.photo;
             msg.reply.text(util.format(target));
