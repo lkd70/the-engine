@@ -21,12 +21,22 @@ exports.init = (bot, prefs) => {
         fn: async msg => {
             let target = (await id.getTarget(msg) || msg.chat).id;
             
-            const rawEntry = await bot.db.srandmember(`chat${target}:quotes`);
-            if (rawEntry) {
-                const entry = JSON.parse(rawEntry);
-                bot.api.forwardMessage(msg.chat.id, entry.chat, entry.msg);
-            } else {
-                return msg.reply.text('No quotes. Reply to a message with /savequote first.');
+            while (true) {
+                const rawEntry = await bot.db.srandmember(`chat${target}:quotes`);
+                if (rawEntry) {
+                    const entry = JSON.parse(rawEntry);
+                    try {
+                        return await bot.api.forwardMessage(msg.chat.id, entry.chat, entry.msg);
+                    } catch (e) {
+                        if (e.description === "Bad Request: message to forward not found") {
+                            await bot.db.srem(`chat${target}:quotes`, rawEntry);
+                        } else {
+                            throw e;
+                        }
+                    }
+                } else {
+                    return msg.reply.text('No quotes. Reply to a message with /savequote first.');
+                }
             }
         }
     });
