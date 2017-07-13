@@ -3,6 +3,11 @@
 const id = require('./id');
 
 exports.init = (bot, prefs) => {
+    const deleteAndRetry = [
+        "Bad Request: message to forward not found",
+        "Forbidden: bot was kicked from the supergroup chat",
+    ];
+
     bot.register.command('savequote', {
         fn: (msg) => {
             if (msg.from.id === msg.reply_to_message.from.id) {
@@ -28,7 +33,7 @@ exports.init = (bot, prefs) => {
                     try {
                         return await bot.api.forwardMessage(msg.chat.id, entry.chat, entry.msg);
                     } catch (e) {
-                        if (e.description === "Bad Request: message to forward not found") {
+                        if (deleteAndRetry.includes(e.description)) {
                             await bot.db.srem(`chat${target}:quotes`, rawEntry);
                         } else {
                             throw e;
