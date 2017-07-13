@@ -1,7 +1,7 @@
 # Creating plugins
 
 0. If you want to create plugin manager, don't, not yet, I'm planning a rework there.
-1. Create new Node module (ie. file) (or a directory with index.js, if one file is not enough), anywhere on your filesystem.
+1. Create new Node module (ie. file) (or a directory with index.js, if one file is not enough), anywhere on your filesystem. Its name cannot contain uppercase letters and whitespace characters, otherwise `plugins` won't be able to disable it.
 2. Add it to `plugins` section in your config file, so the bot will actually run it. Plugins are loaded and initialized in the order in which they're specified.
 3. Export `init` function from yor module. You can export other things for other modules to use, too.
 4. `init` is called to initialize your module, with 2 arguments, `bot` object, and `prefs` object, which is the `prefs` value passed in the entry in `plugins`, and it's designed to be an object holding configuration for your module. Note that if you don't specify it in config, it'll be `undefined`. I'll describe what's in `bot` object in a minute.
