@@ -3,8 +3,18 @@
 
 exports.init = (bot, prefs) => {
 
+    const help = [
+        "Use `/help <command>` to get help for one of the /commands.",
+        // todo: explain <> []
+    ].join('\n')
+
     bot.register.command('help', {
-        help: "You are here!",
+        // help: [
+        //     "That's how to use help :)",
+        //     "You can get help about other /commands too,",
+        //     "by typing `/help <command>.`",
+        // ].join('\n'),
+        help,
         fn: msg => {
             var command = msg.args.toLowerCase();
 

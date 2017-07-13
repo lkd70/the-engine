@@ -70,6 +70,13 @@ exports.init = (bot_, prefs) => {
     const requiresPermission = (perm, fn) => fn // temporary, will be replaced with proper function
 
     bot.register.command('plugins', {
+        help: [
+            `Lists configurable plugins and their status in this chat:`,
+            ``,
+            `${emoji.get('white_check_mark')} -- enabled`,
+            `${emoji.get('x')} -- disabled`,
+            `${emoji.get('warning')} -- failed to load. It's our fault, not yours.`,
+        ].join('\n'),
         fn: msg => {
             bot.db.pipeline(
                 pluginList.map(name => ['sismember', `chat${msg.chat.id}:disabledPlugins`, name])

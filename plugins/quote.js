@@ -4,6 +4,9 @@ const id = require('./id');
 
 exports.init = (bot, prefs) => {
     bot.register.command('savequote', {
+        help: [
+            "Reply to a message to save it as quote. It may then randomly appear when /quote is used.",
+        ].join('\n'),
         fn: (msg) => {
             if (msg.from.id === msg.reply_to_message.from.id) {
                 return "You cannot save your own message, someone else must find it worthwhile";
@@ -18,6 +21,10 @@ exports.init = (bot, prefs) => {
         }
     });
     bot.register.command('quote', {
+        help: [
+            "Get a random quote of person specified as argument (by id or username), replied-to person, or someone random from this chat.",
+            "Reply to message with /savequote to save it as possible quote.",
+        ].join('\n'),
         fn: async msg => {
             let target = (await id.getTarget(msg) || msg.chat).id;
             

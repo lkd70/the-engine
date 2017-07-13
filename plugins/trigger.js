@@ -2,6 +2,7 @@
 
 exports.init = (bot, prefs) => {
     bot.register.command('trigger', {
+        help: "`/trigger <name>` -- summon replied-to message each time someone starts their message with #<name> hashtag.",
         fn: (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
             console.log(tag);
