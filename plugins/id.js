@@ -90,6 +90,12 @@ exports.init = (bot_, prefs) => {
     exports.registerUser(bot.profile);
     bot.api.on('text', exports.registerMsg)
     bot.register.command('id', {
+        help: [
+            "Get more info about a chat.",
+            "",
+            "You can specify username or id as argument, or reply to someone. " +
+            "Or neither, to query the chat you're currently in.",
+        ].join('\n'),
         fn: async (msg) => {
             try {
                 var target = (await exports.getTarget(msg)) || msg.chat;

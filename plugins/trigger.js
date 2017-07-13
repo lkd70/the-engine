@@ -4,6 +4,7 @@ const Rq = require('./requirements');
 
 exports.init = (bot, prefs) => {
     bot.register.command('trigger', {
+        help: "`/trigger <name>` -- summon replied-to message each time someone starts their message with #<name> hashtag.",
         fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
             console.log(tag);

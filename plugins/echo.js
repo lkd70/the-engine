@@ -27,6 +27,7 @@ exports.init = (bot, prefs) => {
 
     bot.register.command('echo', {
 
+        help: `Format using Markdown and emojify text passed as argument.`,
         format: true,
         fn: message => {
 
