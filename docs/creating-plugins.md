@@ -19,7 +19,9 @@ The second argument, the object, can contain other stuff too, like `help` proper
 
 `bot.register` allows you to attach listers almost directly to the Telebot instance. Almost, because it adds checking if message was not marked as fully processed, and if the plugin is not disabled. Use `bot.api.on` instead if and only if you wish to bypass those checks. `bot.register` takes 2 arguments, which would be valid arguments for `bot.api.on` too.
 
-Note that you have to call these function synchronously, you cannot wait for any non-blocking operation, after `init` returns, core considers plugin fully loaded and proceeds to other plugins. After all plugins are loaded, `bot.register` is set to `null`.
+Do NOT attach commands using `bot.register('/command', ...)`. Use `bot.register.command('command', ...)`.
+
+Note that you have to call these functions synchronously, you cannot wait for any non-blocking operation, after `init` returns, core considers plugin fully loaded and proceeds to other plugins. Attempting to call `bot.register` and `bot.register.command` will fail.
 
 ## `bot.db`
 
@@ -33,4 +35,10 @@ Telebot instance. Enough said.
 
 Main config, as object (ie. parsed, not left as string).
 
-There may be other stuff there, consider it private, it may change at any time without major release or warning, use at your own risk.
+## `bot.profile`
+
+Result of calling `getMe`, object.
+So, if you want to obtain bots username, or id, or whatever, don't call `getMe`, just use this.
+
+
+There may be other stuff in `bot` object, consider it private, it may change at any time without major release or warning, use at your own risk.
