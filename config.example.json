@@ -2,15 +2,15 @@
     "auth_token": "374331012:AAHhiBuYyyC2u6WMj3zxD6EVN0OVUzUgGYY",
     "db": {},
     "plugins": [
-        { "path": "./plugins/plugins", "essential": true },
-        { "path": "./plugins/sayhi" },
-        { "path": "./plugins/ping"  },
-        { "path": "./plugins/help"  },
-        { "path": "./plugins/quote" },
-        { "path": "./plugins/id"    },
-        { "path": "./plugins/trigger"  },
-        { "path": "./plugins/unformat" },
         { "path": "./plugins/demojify" },
-        { "path": "./plugins/echo"     }
+        { "path": "./plugins/echo" },
+        { "path": "./plugins/help" },
+        { "path": "./plugins/id" },
+        { "path": "./plugins/ping" },
+        { "path": "./plugins/plugins" },
+        { "path": "./plugins/quote" },
+        { "path": "./plugins/sayhi" },
+        { "path": "./plugins/trigger" },
+        { "path": "./plugins/unformat" }
     ]
 }
