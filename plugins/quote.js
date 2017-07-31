@@ -10,6 +10,9 @@ exports.init = (bot, prefs) => {
 
     bot.register.command('savequote', {
         fn: (msg) => {
+            if (!msg.reply_to_message) {
+                return "Reply to a message you'd like to save";
+            }
             if (msg.from.id === msg.reply_to_message.from.id) {
                 return "You cannot save your own message, someone else must find it worthwhile";
             }
@@ -25,7 +28,7 @@ exports.init = (bot, prefs) => {
     bot.register.command('quote', {
         fn: async msg => {
             let target = (await id.getTarget(msg) || msg.chat).id;
-            
+
             while (true) {
                 const rawEntry = await bot.db.srandmember(`chat${target}:quotes`);
                 if (rawEntry) {

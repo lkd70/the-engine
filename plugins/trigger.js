@@ -5,7 +5,7 @@ exports.init = (bot, prefs) => {
         fn: (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
             console.log(tag);
-            if (!/\w+/.test(tag)) {
+            if (!/^\w+$/.test(tag)) {
                 return 'Trigger name can only contain letters, digits and underscore';
             }
             bot.db.hset(
