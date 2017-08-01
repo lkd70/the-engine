@@ -5,6 +5,7 @@
 const path = require('path')
 const emoji = require('../emoji')
 const coreSymbols = require('../core-symbols')
+const Rq = require('./requirements')
 
 let pluginList
 let pluginSet
@@ -67,8 +68,6 @@ exports.init = (bot_, prefs) => {
 
     pluginSet = exports.set = new Set(pluginList)
 
-    const requiresPermission = (perm, fn) => fn // temporary, will be replaced with proper function
-
     bot.register.command('plugins', {
         fn: msg => {
             bot.db.pipeline(
@@ -88,7 +87,7 @@ exports.init = (bot_, prefs) => {
 
 
     bot.register.command('disable', {
-        fn: requiresPermission('can_change_info', msg => {
+        fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), msg => {
             if (!msg.args) {
                 return 'Give me name of a plugin to disable.'
             }
@@ -101,7 +100,7 @@ exports.init = (bot_, prefs) => {
     })
 
     bot.register.command('enable', {
-        fn: requiresPermission('can_change_info', msg => {
+        fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), msg => {
             if (!msg.args) {
                 return 'Give me name of a plugin to enable.'
             }

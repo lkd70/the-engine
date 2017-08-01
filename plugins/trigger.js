@@ -1,8 +1,10 @@
 'use strict'
 
+const Rq = require('./requirements');
+
 exports.init = (bot, prefs) => {
     bot.register.command('trigger', {
-        fn: (msg) => {
+        fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
             console.log(tag);
             if (!/^\w+$/.test(tag)) {
@@ -17,7 +19,7 @@ exports.init = (bot, prefs) => {
                 }),
             );
             return `Trigger saved. Start message with #${tag} to summon that message.`;
-        }
+        })
     });
     bot.register('text', async msg => {
         if (!msg.entities || msg.entities[0].type !== 'hashtag') {

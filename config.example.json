@@ -9,6 +9,7 @@
         { "path": "./plugins/ping" },
         { "path": "./plugins/plugins" },
         { "path": "./plugins/quote" },
+        { "path": "./plugins/requirements", "essential": true },
         { "path": "./plugins/sayhi" },
         { "path": "./plugins/trigger" },
         { "path": "./plugins/unformat" }
