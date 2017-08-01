@@ -8,6 +8,12 @@ exports.init = (bot, prefs) => {
         // todo: explain <> []
     ].join('\n')
 
+    bot.register.command('start', {
+        fn: (msg) => {
+            msg.reply.text(help, {parseMode: 'markdown'});
+        }
+    });
+
     bot.register.command('help', {
         // help: [
         //     "That's how to use help :)",
