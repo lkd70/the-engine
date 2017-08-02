@@ -1,5 +1,7 @@
 'use strict';
 
+const request = require('request-promise');
+
 exports.init = (bot, prefs) => {
 
     bot.register.command(['spongebob','spongify','mock'], {
@@ -36,6 +38,14 @@ exports.init = (bot, prefs) => {
             });
         }
     });
+
+    bot.register.command(['chuck'], {
+        fn: msg => {
+            request.get('https://api.icndb.com/jokes/random', { json: true })
+                .then(res => res.value.joke)
+                .then(msg.reply.text);
+        }
+    })
 
     bot.register.command(['coinflip','flip'], {
         fn: () => "The coin landed on " + ((Math.random()>=0.5) ? "Heads" : "Tails") + "!"
