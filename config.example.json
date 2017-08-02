@@ -6,6 +6,7 @@
         { "path": "./plugins/echo" },
         { "path": "./plugins/help" },
         { "path": "./plugins/id" },
+        { "path": "./plugins/jsondump" },
         { "path": "./plugins/memes" },
         { "path": "./plugins/ping" },
         { "path": "./plugins/plugins" },
