@@ -1,5 +1,7 @@
 'use strict';
 
+const request = require('request-promise');
+
 exports.init = (bot, prefs) => {
 
     bot.register.command(['spongebob', 'spongify', 'mock'], {
