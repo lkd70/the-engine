@@ -6,12 +6,15 @@
         { "path": "./plugins/echo" },
         { "path": "./plugins/help" },
         { "path": "./plugins/id" },
+        { "path": "./plugins/memes" },
         { "path": "./plugins/ping" },
         { "path": "./plugins/plugins" },
         { "path": "./plugins/quote" },
         { "path": "./plugins/requirements", "essential": true },
         { "path": "./plugins/sayhi" },
+        { "path": "./plugins/strings" },
         { "path": "./plugins/trigger" },
         { "path": "./plugins/unformat" }
     ]
 }
+    
