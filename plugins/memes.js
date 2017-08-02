@@ -41,9 +41,12 @@ exports.init = (bot, prefs) => {
 
     bot.register.command(['chuck'], {
         fn: msg => {
-            request.get('https://api.icndb.com/jokes/random', { json: true })
-                .then(res => res.value.joke)
-                .then(msg.reply.text);
+            request.get('https://api.icndb.com/jokes/random', {
+                json: true,
+                qs: { escape: 'javascript' },
+            })
+            .then(res => res.value.joke)
+            .then(msg.reply.text);
         }
     })
 
