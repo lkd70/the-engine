@@ -4,7 +4,7 @@ const request = require('request-promise');
 
 exports.init = (bot, prefs) => {
 
-    bot.register.command(['spongebob','spongify','mock'], {
+    bot.register.command(['spongebob', 'spongify', 'mock'], {
         fn: msg => {
             if (!msg.args) {
                 return "ProVidE SoME TExt, duDE!!";
@@ -17,7 +17,7 @@ exports.init = (bot, prefs) => {
         }
     });
 
-    bot.register.command(['belikebill','blb'], {
+    bot.register.command(['belikebill', 'blb'], {
         fn: msg => {
             if (!msg.args) {
                 return "Please provide some text...";
@@ -50,7 +50,7 @@ exports.init = (bot, prefs) => {
         }
     })
 
-    bot.register.command(['coinflip','flip'], {
+    bot.register.command(['coinflip', 'flip'], {
         fn: () => "The coin landed on " + ((Math.random()>=0.5) ? "Heads" : "Tails") + "!"
     });
 
