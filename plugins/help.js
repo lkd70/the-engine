@@ -10,7 +10,16 @@ exports.init = (bot, prefs) => {
 
     bot.register.command('start', {
         fn: (msg) => {
-            msg.reply.text("*Welcome to The Engine " + msg.from.first_name + "!*\n\nThe Engine is a powerful Telegram [Node.js](https://nodejs.org) bot based on Mattata.\nThe bot is fully modular in that it relies purely on plugins to function; This means you can add plugins to include additional functionality.\n\nWhere to go from here?\nTry the /help command for some assistance.\nOr check out some other /commands", {parseMode: 'markdown'});
+            msg.reply.text([
+                `*Welcome to The Engine ${msg.from.first_name}!*`,
+                ``,
+               ` The Engine is a powerful Telegram [Node.js](https://nodejs.org) bot inspired by Mattata.`,
+               `The bot is fully modular in that it relies purely on plugins to function; this means you can add plugins to include additional functionality.`,
+               ``,
+               `Where to go from here?`,
+               `Try the /help command for some assistance.`,
+               `Or check out some other /commands`,
+            ].join('\n'), { parseMode: 'markdown' });
         }
     });
 
@@ -33,7 +42,15 @@ exports.init = (bot, prefs) => {
                     return "The command '" + command + "' wasn't found. Use /commands to list all available commands.";
                 }
             } else {
-                return msg.reply.text("Hey *" + msg.from.first_name + "!* Welcome to The Engine " + emoji.get('grin') + "\n\nThe Engine is an intelligent plugin-based bot.\nAt its core, The Engine is a simple yet powerful plugin platform. This makes expanding the bots functionality as simple as adding a plugin.\nTo see all loaded plugins, try the /plugins command!\n\nNeed help for a specific command? " + help, {
+                return msg.reply.text([
+                    `Hey *${msg.from.first_name}!* Welcome to The Engine ${emoji.get('grin')}`,
+                    ``,
+                    `The Engine is an intelligent plugin-based bot.`,
+                    `At its core, The Engine is a simple yet powerful plugin platform. This makes expanding the bots functionality as simple as adding a plugin.`,
+                    `To see all loaded plugins, try the /plugins command!`,
+                    ``,
+                    `Need help for a specific command? ${help}`,
+                ].join('\n'), {
                     parseMode: 'markdown',
                     asReply: msg.chat.type !== 'private',
                 });
