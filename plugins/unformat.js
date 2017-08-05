@@ -41,7 +41,7 @@ const tohtml = exports.tohtml = (msg) => {
     let text = msg.text
     for (const {type, offset, length, url} of msg.entities.reverse()) {
         const original = escapeHtml(msg.text.slice(offset, offset + length))
-        const escapedUrl = escapeHtml(url)
+        const escapedUrl = url? escapeHtml(url): null
         switch (type) {
             case 'bold':
                 text = replace(text, offset, length, `<b>${original}</b>`)
@@ -56,7 +56,7 @@ const tohtml = exports.tohtml = (msg) => {
                 text = replace(text, offset, length, `<pre>${original}</pre>`)
                 break
             case 'text_link':
-                text = replace(text, offset, length, `<a href="${url}">${original}]</a>`)
+                text = replace(text, offset, length, `<a href="${escapedUrl}">${original}]</a>`)
                 break
         }
     }

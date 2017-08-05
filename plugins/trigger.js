@@ -7,7 +7,6 @@ exports.init = (bot, prefs) => {
         help: "`/trigger <name>` -- summon replied-to message each time someone starts their message with #<name> hashtag.",
         fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
-            console.log(tag);
             if (!/^\w+$/.test(tag)) {
                 return 'Trigger name can only contain letters, digits and underscore';
             }
@@ -30,7 +29,15 @@ exports.init = (bot, prefs) => {
         const rawEntry = await bot.db.hget(`chat${msg.chat.id}:triggers`, tag);
         if (rawEntry) {
             const entry = JSON.parse(rawEntry);
-            bot.api.forwardMessage(msg.chat.id, entry.chat, entry.msg);
+            try {
+                await bot.api.forwardMessage(msg.chat.id, entry.chat, entry.msg);
+            } catch (e) {
+                if (e.description === "Bad Request: message to forward not found") {
+                    bot.db.hdel(`chat${msg.chat.id}:triggers`, tag);
+                } else {
+                    throw e;
+                }
+            }
         }
     });
 };
