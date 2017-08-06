@@ -73,12 +73,23 @@ const checks = exports.checks = {
     },
 
     callerHasPermission: curry((perms, msg) => checks.permission(msg.chat, msg.from, perms)),
+    botHasPermission: curry((perms, msg) => checks.permission(msg.chat, bot.profile, perms)),
 }
 
 
 exports.callerHasPermission = (perms) => ({
     check: checks.callerHasPermission(perms),
     failMessage: () => `have ${joinOptions('and', castArray(perms))} permission(s)`
+})
+
+exports.botHasPermission = (perms) => ({
+    check: checks.botHasPermission(perms),
+    failMessage: () => `give me the ${joinOptions('and', castArray(perms))} permission(s)`
+})
+
+exports.inChatType = (types) => ({
+    check: (msg) => castArray(types).includes(msg.chat.type),
+    failMessage: () => `be in a ${joinOptions('or', castArray(types))}`
 })
 
 
