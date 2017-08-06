@@ -2,11 +2,11 @@
   "name": "the-engine-bot",
   "version": "0.1.0",
   "dependencies": {
-    "emojione": "^3.1.0",
-    "ioredis": "^3.1.1",
+    "emojione": "^3.1.1",
+    "ioredis": "^3.1.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "telebot": "^1.2.0",
+    "telebot": "^1.2.3",
     "xregexp": "^3.2.0"
   },
   "scripts": {
