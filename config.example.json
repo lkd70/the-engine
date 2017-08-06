@@ -2,7 +2,10 @@
     "auth_token": "374331012:AAHhiBuYyyC2u6WMj3zxD6EVN0OVUzUgGYY",
     "db": {},
     "plugins": [
+        { "path": "./plugins/antibot" },
+        { "path": "./plugins/ban" },
         { "path": "./plugins/demojify" },
+        { "path": "./plugins/discard-old-updates", "essential": true },
         { "path": "./plugins/echo" },
         { "path": "./plugins/help" },
         { "path": "./plugins/id" },
@@ -10,6 +13,7 @@
         { "path": "./plugins/memes" },
         { "path": "./plugins/ping" },
         { "path": "./plugins/plugins" },
+        { "path": "./plugins/promote" },
         { "path": "./plugins/quote" },
         { "path": "./plugins/requirements", "essential": true },
         { "path": "./plugins/sayhi" },
