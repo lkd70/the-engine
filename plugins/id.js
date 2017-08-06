@@ -5,6 +5,9 @@ const util = require('util');
 let bot;
 
 exports.resolve = async (username) => {
+    if (/^-?\d+$/.test(username)) {
+        return {id: username};
+    }
     username = username.replace(/^@/, '').toLowerCase();
     const result = await bot.db.hget('usernames', username);
     if (result) {
@@ -51,7 +54,7 @@ exports.toUserId = async (username) => {
     }
 };
 
-exports.toUser = async (username) => {;
+exports.toUser = async (username) => {
     const result = await exports.resolve(username);
     if (result && result.type === 'private') {
         return result;
@@ -101,6 +104,7 @@ exports.init = (bot_, prefs) => {
                 var target = (await exports.getTarget(msg)) || msg.chat;
             } catch (e) {
                 msg.reply.text(e.message);
+                return;
             }
             if (Object.keys(target).length === 1) {
                 try {
