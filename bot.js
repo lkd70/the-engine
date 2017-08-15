@@ -49,7 +49,7 @@ try {
     });
 
 } catch (e) {
-    console.log(String(e));
+    console.error(e);
     control.shutdown("Unable to finish authentication", true);
 }
 
@@ -98,8 +98,8 @@ function setup () {
         try {
             require(plugins[i].path).init(bot, plugins[i].prefs);
         } catch (e) {
-            console.log(`Failed to load plugin "${plugins[i].path}".`);
-            console.log(e);
+            console.error(`Failed to load plugin "${plugins[i].path}".`);
+            console.error(e);
             plugins[i][symbols.error] = e;
             failed++;
         }
