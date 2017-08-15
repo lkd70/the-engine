@@ -11,6 +11,7 @@
         { "path": "./plugins/id" },
         { "path": "./plugins/jsondump" },
         { "path": "./plugins/memes" },
+        { "path": "./plugins/muteall" },
         { "path": "./plugins/ping" },
         { "path": "./plugins/plugins" },
         { "path": "./plugins/promote" },
