@@ -16,7 +16,6 @@
         { "path": "./plugins/promote" },
         { "path": "./plugins/quote" },
         { "path": "./plugins/requirements", "essential": true },
-        { "path": "./plugins/sayhi" },
         { "path": "./plugins/strings" },
         { "path": "./plugins/trigger" },
         { "path": "./plugins/unformat" }
