@@ -7,6 +7,9 @@ exports.init = (bot, prefs) => {
         help: "`/trigger <name>` -- summon replied-to message each time someone starts their message with #<name> hashtag.",
         fn: Rq.wrap(Rq.callerHasPermission('can_change_info'), (msg) => {
             const tag = msg.args.replace(/^#/, '').toLowerCase();
+            if (!msg.reply_to_message) {
+                return "Reply to a message you'd like to save as a trigger.";
+            }
             if (!/^\w+$/.test(tag)) {
                 return 'Trigger name can only contain letters, digits and underscore';
             }

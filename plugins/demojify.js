@@ -11,6 +11,11 @@ const demojify = exports.demojify = text => XRegExp.replaceEach(text, emojiRepla
 
 exports.init = (bot, prefs) => {
     bot.register.command('demojify', {
-        fn: msg => demojify(msg.args || msg.reply_to_message.text)
+        fn: msg => {
+            if (!(msg.args || msg.reply_to_message && msg.reply_to_message.text)) {
+                return 'Pass some text to demojify, or reply to a text message.';
+            }
+            return demojify(msg.args || msg.reply_to_message.text);
+        }
     });
 };
