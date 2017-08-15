@@ -2,6 +2,8 @@
 
 const request = require('request-promise');
 
+const emoji = require('../emoji');
+
 const spongify = (text) => Array.from(text).map(c => ((Math.random()<.6) ? c.toLowerCase() : c.toUpperCase())).join('')
 
 exports.init = (bot, prefs) => {
@@ -60,6 +62,23 @@ exports.init = (bot, prefs) => {
 
     bot.register.command(['coinflip', 'flip'], {
         fn: () => "The coin landed on " + ((Math.random()>=0.5) ? "Heads" : "Tails") + "!"
+    });
+
+    bot.register.command(['pingu'], {
+        fn: (msg) => 'NOOT NOOT!'
+    });
+
+    const pointlessReplyMarkup = bot.api.inlineKeyboard([
+        [
+            bot.api.inlineButton('Pointless button', {callback: '/pointless'}),
+        ]
+    ]);
+
+    bot.register.command(['pointless'], {
+        fn: (msg) => msg.reply.text(`${emoji.get('warning')} *Warning*: pointless`, {
+            parseMode: 'markdown',
+            replyMarkup: pointlessReplyMarkup,
+        }),
     });
 
 };
