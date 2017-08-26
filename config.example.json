@@ -4,6 +4,7 @@
     "plugins": [
         { "path": "./plugins/antibot" },
         { "path": "./plugins/ban" },
+        { "path": "./plugins/delban" },
         { "path": "./plugins/demojify" },
         { "path": "./plugins/discard-old-updates", "essential": true },
         { "path": "./plugins/echo" },
