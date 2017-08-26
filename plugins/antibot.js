@@ -5,7 +5,11 @@ const Rq = require('./requirements');
 
 exports.init = (bot, prefs) => {
     bot.register('newChatMembers', async msg => {
-        const bots = msg.new_chat_members.filter(user => /bot$/i.test(user.username));
+        if (msg.chat.all_members_are_administrators) {
+            return;
+        }
+
+        const bots = msg.new_chat_members.filter(user => user.is_bot);
         if (bots.length === 0) {
             return;
         }

@@ -58,6 +58,10 @@ exports.init = (bot_, prefs={}) => {
     })
 
     bot.register('*', async msg => {
+        if (msg.chat.type !== 'supergroup') {
+            return;
+        }
+
         const strUntil = await bot.db.hget('mutedChats', msg.chat.id);
         if (!strUntil) {
             return;

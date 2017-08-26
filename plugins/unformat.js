@@ -19,9 +19,14 @@ function* reversed(arr) {
 }
 
 
+function toTextMentionUrl(userid) {
+    return `tg://user?id=${userid}`
+}
+
+
 const tomd = exports.tomd = exports.unformat = (msg) => {
     let text = msg.text
-    for (const {type, offset, length, url} of reversed(msg.entities || [])) {
+    for (const {type, offset, length, url, user} of reversed(msg.entities || [])) {
         const original = msg.text.slice(offset, offset + length)
         switch (type) {
             case 'bold':
@@ -39,6 +44,9 @@ const tomd = exports.tomd = exports.unformat = (msg) => {
             case 'text_link':
                 text = replace(text, offset, length, `[${original}](${url})`)
                 break
+            case 'text_mention':
+                text = replace(text, offset, length, `[${original}](${toTextMentionUrl(user.id)})`)
+                break
         }
     }
     return text
@@ -46,7 +54,7 @@ const tomd = exports.tomd = exports.unformat = (msg) => {
 
 const tohtml = exports.tohtml = (msg) => {
     let text = msg.text
-    for (const {type, offset, length, url} of reversed(msg.entities || [])) {
+    for (const {type, offset, length, url, user} of reversed(msg.entities || [])) {
         const original = escapeHtml(msg.text.slice(offset, offset + length))
         const escapedUrl = url? escapeHtml(url): null
         switch (type) {
@@ -63,7 +71,10 @@ const tohtml = exports.tohtml = (msg) => {
                 text = replace(text, offset, length, `<pre>${original}</pre>`)
                 break
             case 'text_link':
-                text = replace(text, offset, length, `<a href="${escapedUrl}">${original}]</a>`)
+                text = replace(text, offset, length, `<a href="${escapedUrl}">${original}</a>`)
+                break
+            case 'text_mention':
+                text = replace(text, offset, length, `<a href="${toTextMentionUrl(user.id)}">${original}</a>`)
                 break
         }
     }
