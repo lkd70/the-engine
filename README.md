@@ -1,6 +1,8 @@
 # The Engine
 A mattata-esque Telegram bot written in [Node.js](https://nodejs.org)
 
+This bot is currently out of fuel, maybe one day development will continue.
+
 ### Powered by...
 The Engine couldn't work without a few projects:
 * [TeleBot](https://github.com/mullwar/telebot) - A Telegram Framework for [Node.js](https://nodejs.org).
